@@ -1,0 +1,17 @@
+<?php
+defined('_JEXEC') or die ('Restricted access'); ?>
+<div id="djslider-loader<?php echo $mid; ?>" class="djslider-loader djslider-loader-<?php echo $theme ?>" >              	<ul id="slider" class="djslider-in">
+          		<?php foreach ($slides as $slide) 				{ ?>					<li class="slider-item">						<?php if($slide->image)						{ 							$action = $params->get('link_image',1);							$attr = 'class="image-link"';
+          					if($action > 1) {								if($params->get('show_desc')) 									$attr.= ' title="'.(!empty($slide->title) ? htmlspecialchars($slide->title.' ') : '').htmlspecialchars('<small>'.strip_tags($slide->description,"<p><a><b><strong><em><i><u>").'</small>').'"';							}	?>
+	            			<?php if (($slide->link && $action==1) || $action>1) 							{ ?>								<a <?php echo $attr; ?> href="<?php echo ($action>1 ? $slide->image : $slide->link); ?>" target="<?php echo $slide->target; ?>">							<?php } ?>								<div class="slidermask"></div>								<img class="js-imagescale" src="<?php echo $slide->image; ?>" alt="<?php echo $slide->alt; ?>" />
+							<?php if (($slide->link && $action==1) || $action>1) 							{ ?>								</a>							<?php } ?>						<?php } ?>
+						<?php if($params->get('slider_source') && ($params->get('show_title') || ($params->get('show_desc') && !empty($slide->description) || ($params->get('show_readmore') && $slide->link)))) 						{ ?>
+						<!-- Slide description area: START -->
+						<div class="slide-desc tbl">							<div class="tblcell">									<?php if($params->get('show_title')) 										{ ?>											<div class="slide-title">													<?php if($params->get('link_title') && $slide->link) { ?><a href="<?php echo $slide->link; ?>" target="<?php echo $slide->target; ?>"><?php } ?>														<?php echo $slide->title; ?>													<?php if($params->get('link_title') && $slide->link) { ?></a><?php } ?>											</div>										<?php } ?>
+										<?php if($params->get('show_desc')) 										{ ?>
+											<div class="slide-text">												<?php if($params->get('link_desc') && $slide->link) { ?>												<a href="<?php echo $slide->link; ?>" target="<?php echo $slide->target; ?>">													<?php echo strip_tags($slide->description,"<br><span><em><i><b><strong><small><big>"); ?>												</a>												<?php } else { ?>													<?php echo $slide->description; ?>												<?php } ?>											</div>										<?php } ?>
+																					<a href="<?php echo $slide->link; ?>" target="<?php echo $slide->target; ?>" class="readmore"><?php echo ($params->get('readmore_text',0) ? $params->get('readmore_text') : JText::_('MOD_DJIMAGESLIDER_READMORE')); ?></a>																			<div style="clear: both"></div>							</div>						</div>						<!-- Slide description area: END -->					<?php } ?>											</li>		<?php } ?>       	</ul>
+        <?php if($show->arr || $show->btn) 		{ ?>		<div class="setas-area">				<div class="seta-prev"></div>				<div class="seta-next"></div>		</div>
+        <?php } ?>
+        <?php if($show->idx) 		{ ?>		<div id="cust-navigation<?php echo $mid; ?>" class="<?php echo $params->get('idx_style', 0) ? 'navigation-numbers' : 'navigation-container-custom' ?> <?php echo $show->idx==2 ? 'showOnHover':'' ?>">			<?php $i = 0; foreach ($slides as $slide) 			{ 				?><span class="load-button<?php if ($i == 0) echo ' load-button-active'; ?>"><?php if($params->get('idx_style')) echo ($i+1) ?></span><?php 
+			$i++; } ?>       </div>	<?php } ?> </div><div style="clear: both"></div>
